@@ -5,13 +5,14 @@ import org.springframework.stereotype.Repository;
 import java.io.*;
 import java.util.*;
 
-@Repository("File")
+@Repository("UserFile")
 public final class UserFileDas implements UserDao {
+    private final File userFile = new File(
+            Objects.requireNonNull(getClass().getClassLoader().getResource("users.csv")).getPath());
+
+
     @Override
     public List<User> getUsers() {
-        File userFile = new File(
-                Objects.requireNonNull(getClass().getClassLoader().getResource("users.csv")).getPath());
-
         try (
                 Scanner scanner = new Scanner(userFile)
         ) {
@@ -39,7 +40,6 @@ public final class UserFileDas implements UserDao {
                 .findFirst();
     }
 
-    // TODO: 2023-02-03: Make able to return multiple users with same data.
     @Override
     public Optional<User> getUserByName(String name) {
         return getUsers().stream()
@@ -63,8 +63,6 @@ public final class UserFileDas implements UserDao {
 
     @Override
     public void saveFile(List<User> users) {
-        File userFile = new File(
-                Objects.requireNonNull(getClass().getClassLoader().getResource("users.csv")).getPath());
         try (
                 FileWriter fileWriter = new FileWriter(userFile);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)

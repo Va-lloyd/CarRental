@@ -21,7 +21,7 @@ public interface UserDao {
 
     void updateUser(User user, User user1);
 
-    void deleteUser(UUID uuid);
+    void deleteUser(UUID userId);
 
     boolean existsUserWithId(String userId);
 

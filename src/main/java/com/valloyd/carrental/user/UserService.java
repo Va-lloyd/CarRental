@@ -13,7 +13,7 @@ import java.util.UUID;
 public final class UserService {
     private final UserDao userDao;
 
-    public UserService(@Qualifier("File") UserDao userDao) {
+    public UserService(@Qualifier("UserFile") UserDao userDao) {
         this.userDao = userDao;
     }
 
@@ -49,10 +49,10 @@ public final class UserService {
         }
 
         User user = new User(
-                UUID.randomUUID(),
-                request.name(),
-                request.email(),
-                request.phoneNumber());
+                UUID.randomUUID()
+                , request.name()
+                , request.email()
+                , request.phoneNumber());
 
         userDao.addUser(user);
         System.out.println("User with data: " + user + " added to database.");
